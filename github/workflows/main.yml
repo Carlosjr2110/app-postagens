@@ -13,25 +13,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Passo 1: Checkout do código
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Passo 2: Configurar Docker
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Passo 3: Iniciar o Docker Compose (em modo desenv.)
       - name: Build and start containers
         run: |
           docker-compose -f docker-compose.yml up -d
 
-      # Passo 4: Rodar os testes (caso você tenha)
       - name: Run tests
         run: |
           docker-compose exec app npm install
           docker-compose exec app npm test
 
-      # Passo 5: Parar e remover os containers após os testes
       - name: Stop containers
         run: docker-compose down
